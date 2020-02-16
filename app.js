@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.get("/",function(req,res){
     res.sendFile(__dirname+"/signup.html");
-    console.log(req);
 })
 
 app.post("/",function(req,res){
@@ -21,7 +20,7 @@ app.post("/",function(req,res){
         members: [
             {
             email_address: email,
-            /*status: "subscribed",*/
+            status: "subscribed",
             merge_fields:{
                 FNAME: firstName,
                 LNAME: lastName
@@ -36,9 +35,9 @@ app.post("/",function(req,res){
     var options = {
         url: "https://us4.api.mailchimp.com/3.0/lists/280af3caa7",
         method: "POST",
-        /*headers: {
+        headers: {
             "Authorization": "whatever 0f167c50c2e510ef2c917f1ecdb71b08-us4"
-        },*/
+        },
         body: jsonData
     };  
 
@@ -58,6 +57,6 @@ app.post("/failure",function(req,res){
     res.redirect("/");
 })
 
-var server = app.listen(3000, function(){
+var server = app.listen(process.env.PORT || 3000, function(){
     console.log("Server is listening on port 3000");
 });
